@@ -11,11 +11,13 @@ public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, I
 
     private Color _untouchColor;
     private Vector3 _targetPosition;
+    private float _localRotationZ;
 
     private void Start()
     {
         _untouchColor = _spriteRendererScissors[0].color;
         _targetPosition = transform.position;
+        _localRotationZ = transform.rotation.z;
     }
 
     private void Update()
@@ -49,7 +51,7 @@ public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, I
 
     public void Flip()
     {
-        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        transform.localRotation = new Quaternion(transform.localRotation.x, transform.localRotation.y, -transform.localRotation.z, 1);
+        transform.localRotation = new Quaternion(transform.localRotation.x, transform.localRotation.y, _localRotationZ * -1, 1);
+        _localRotationZ *= -1;
     }
 }
