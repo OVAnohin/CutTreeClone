@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private float _speed;
+    [SerializeField] private SpriteRenderer[] _spriteRendererScissors;
+    [SerializeField] private Color _touchColor;
 
-    private SpriteRenderer _spriteRenderer;
     private Color _untouchColor;
-    private Color _touchColor = Color.red;
     private Vector3 _targetPosition;
 
     private void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _untouchColor = _spriteRenderer.color;
+        _untouchColor = _spriteRendererScissors[0].color;
         _targetPosition = transform.position;
     }
 
@@ -35,11 +33,23 @@ public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, I
     public void OnPointerUp(PointerEventData eventData)
     {
         _targetPosition = transform.position;
-        _spriteRenderer.color = _untouchColor;
+        ChangeScissorsColor(_untouchColor);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _spriteRenderer.color = _touchColor;
+        ChangeScissorsColor(_touchColor);
+    }
+
+    private void ChangeScissorsColor(Color color)
+    {
+        foreach (var item in _spriteRendererScissors)
+            item.color = color;
+    }
+
+    public void Flip()
+    {
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        transform.localRotation = new Quaternion(transform.localRotation.x, transform.localRotation.y, -transform.localRotation.z, 1);
     }
 }

@@ -1,19 +1,7 @@
 fileFormatVersion: 2
-guid: a4f121450687c154e90c078aa6cd7de8
+guid: b924cf06561f8694b9a60b01bb04dd40
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 1098179606456428539
-    second: weapons_0
-  - first:
-      213: -5557420877203330147
-    second: weapons_1
-  - first:
-      213: -7888296697152109952
-    second: weapons_2
-  - first:
-      213: 698664279297640794
-    second: Dagger
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -52,12 +40,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  alignment: 9
+  spritePivot: {x: 0.58168197, y: 0.26179498}
+  spritePixelsToUnits: 1000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,91 +97,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: weapons_0
-      rect:
-        serializedVersion: 2
-        x: 71
-        y: 999
-        width: 567
-        height: 324
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bf7e96e98848d3f00800000000000000
-      internalID: 1098179606456428539
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: weapons_1
-      rect:
-        serializedVersion: 2
-        x: 153
-        y: 741
-        width: 538
-        height: 221
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9ba4fa182310e2b0800000000000000
-      internalID: -5557420877203330147
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: weapons_2
-      rect:
-        serializedVersion: 2
-        x: 110
-        y: 394
-        width: 507
-        height: 334
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0828c5ba2f3278290800000000000000
-      internalID: -7888296697152109952
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dagger
-      rect:
-        serializedVersion: 2
-        x: 145
-        y: 73
-        width: 460
-        height: 236
-      alignment: 9
-      pivot: {x: 0.1650253, y: 0.37280843}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a594ac8d57722b900800000000000000
-      internalID: 698664279297640794
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
