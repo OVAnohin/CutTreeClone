@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 1308424243}
   - component: {fileID: 1308424238}
   - component: {fileID: 1308424237}
+  - component: {fileID: 1308424244}
   m_Layer: 0
   m_Name: Scissors
   m_TagString: Untagged
@@ -636,6 +637,25 @@ CircleCollider2D:
   m_Offset: {x: -0.0018482791, y: 0.5519263}
   serializedVersion: 2
   m_Radius: 0.23289841
+--- !u!95 &1308424244
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308424236}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f9fc6dc0f0dcfd5499494dd26728c7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1785345658
 GameObject:
   m_ObjectHideFlags: 0
