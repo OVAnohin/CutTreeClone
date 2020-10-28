@@ -1,36 +1,78 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TreeCrownFiller : MonoBehaviour
 {
-    [SerializeField] private TreeLeave _treeLeave;
+    [SerializeField] private Tilemap[] _levelMap;
+    [SerializeField] private TreeLeaf _greenLeaf;
+    [SerializeField] private TreeLeaf _yellowLeaf;
     [SerializeField] private Transform _treeCrown;
-    [SerializeField] private int _crownWidth;
-    [SerializeField] private int _crownHeight;
-    [SerializeField] private float _stepPlacementLeaves;
 
-    private void Start()
+    public List<TreeLeaf> GreenLeaves { get; private set; }
+    public List<TreeLeaf> YellowLeaves { get; private set; }
+
+    private System.Random _random = new System.Random();
+    private Tilemap _level;
+
+    private void Awake()
     {
+        _level = _levelMap[0];
+        GreenLeaves = new List<TreeLeaf>();
+        YellowLeaves = new List<TreeLeaf>();
         FillCrownOfTree();
     }
 
     private void FillCrownOfTree()
     {
-        float stepX = 0, stepY = 0;
-
-        for (int i = 0; i < _crownHeight; i++)
+        for (int y = _level.cellBounds.y; y <= _level.cellBounds.size.y; y++)
         {
-            stepX = 0;
-
-            for (int j = 0; j < _crownWidth; j++)
+            for (int x = _level.cellBounds.x; x <= _level.cellBounds.size.x; x++)
             {
-                Vector3 position = new Vector3(_treeCrown.position.x + stepX, _treeCrown.position.y + stepY, 0);
-                TreeLeave treeLeave = Instantiate(_treeLeave, position, Quaternion.identity, _treeCrown);
-                stepX += _stepPlacementLeaves;
-            }
+                TileBase tile = _level.GetTile(new Vector3Int(x, y, 0));
 
-            stepY += _stepPlacementLeaves;
+                if (tile != null)
+                {
+                    switch (tile.name)
+                    {
+                        case "GreenCircle":
+                            GenerateLeaves(y, x, _greenLeaf);
+                            break;
+                        case "YellowCircle":
+                            GenerateLeaves(y, x, _yellowLeaf);
+                            break;
+                    }
+
+                    _level.SetTile(new Vector3Int(x, y, 0), default);
+                }
+            }
         }
+    }
+
+    private void GenerateLeaves(int y, int x, TreeLeaf leaf)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            float step = (float)_random.Next(-1, 1) / 10f;
+            Vector3 vector3 = _level.GetBoundsLocal(new Vector3Int(x, y, 0)).center + new Vector3(step, step, 0);
+            TreeLeaf spawned = Instantiate(leaf, vector3, Quaternion.Euler(0, 0, _random.Next(0, 360)), _treeCrown);
+
+            AddLeafToList(leaf, spawned);
+        }
+    }
+
+    private void AddLeafToList(TreeLeaf leaf, TreeLeaf spawned)
+    {
+        string leafType = leaf.GetType().ToString();
+        switch (leafType)
+        {
+            case "GreenLeaf":
+                GreenLeaves.Add(spawned);
+                break;
+            case "YellowLeaf":
+                YellowLeaves.Add(spawned);
+                break;
+        }    
     }
 }

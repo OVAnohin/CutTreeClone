@@ -8,7 +8,7 @@ public class EmergencyZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<TreeLeave>())
+        if (collision.GetComponent<TreeLeaf>())
             _scissors.TryCutAnimationPlay();
     }
 }
