@@ -540,7 +540,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.7718939, g: 0.8968798, b: 0.9245283, a: 0}
+  m_BackGroundColor: {r: 0.14070843, g: 0.8148054, b: 0.9622642, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -893,7 +893,7 @@ MonoBehaviour:
   - {fileID: 1652209979}
   _greenLeaf: {fileID: 309054338234584643, guid: 140f6d1634249694fa18ed30fa2c0158,
     type: 3}
-  _yellowLeaf: {fileID: 1109112013447188797, guid: 037c9a9d1469f7c429e187a049031991,
+  _yellowLeaf: {fileID: 864183163317019539, guid: 037c9a9d1469f7c429e187a049031991,
     type: 3}
   _treeCrown: {fileID: 1405186326}
 --- !u!114 &1405186328
@@ -908,7 +908,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585c8a42c9f08c447a9d48d79b40f56f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _percentageOfLosses: 1
+  _percentageOfLosses: 3
+  _percentageOfWinnig: 95
 --- !u!1 &1522710325
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,7 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 154fd21f613991d45bd00c20478ed19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotateSpeed: 0.05
+  _rotateSpeed: 0.015
 --- !u!114 &1522710328
 MonoBehaviour:
   m_ObjectHideFlags: 0

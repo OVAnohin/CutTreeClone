@@ -6,6 +6,7 @@ using UnityEngine;
 public class LeafChecker : MonoBehaviour
 {
     [SerializeField] private int _percentageOfLosses;
+    [SerializeField] private int _percentageOfWinnig;
 
     private List<TreeLeaf> _greenLeaves;
     private List<TreeLeaf> _yellowLeaves;
@@ -32,19 +33,20 @@ public class LeafChecker : MonoBehaviour
 
         leaf.Clipped -= OnLeafClipped;
 
-        float currentPercent = (_greenLeaves.Count * 100) / _greenLeavesHundredPercent;
-        if (100 - currentPercent >= _percentageOfLosses)
+        if (CheckClippedStatus(_greenLeaves, _greenLeavesHundredPercent, _percentageOfLosses))
             Debug.Log("Loose");
 
-        currentPercent = CheckClippedStatus();
+        if (CheckClippedStatus(_yellowLeaves, _yellowLeavesHundredPercent, _percentageOfWinnig))
+            Debug.Log("Win");
     }
 
-    private bool CheckClippedStatus(List<TreeLeaf> _yellowLeaves, float hundredPercent)
+    private bool CheckClippedStatus(List<TreeLeaf> leaves, float hundredPercent, int percent)
     {
-        float currentPercent = (_yellowLeaves.Count * 100) / _yellowLeavesHundredPercent;
-        if (100 - currentPercent >= 90)
-            Debug.Log("Win");
-        return currentPercent;
+        float currentPercent = (leaves.Count * 100) / hundredPercent;
+        if (100 - currentPercent >= percent)
+            return true;
+
+        return false;
     }
 
     private IEnumerator WaitTreeCrownFiller()
