@@ -38,6 +38,7 @@ public class Game : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 0;
+        _treeCrownFiller.ReFillCrown();
         _start.SetActive(true);
     }
 
@@ -57,6 +58,7 @@ public class Game : MonoBehaviour
     {
         Time.timeScale = 1;
         _treeCrownFiller.ReFillCrown();
+        _leafChecker.ResetChecker();
         _scissors.ResetScissors();
     }
 

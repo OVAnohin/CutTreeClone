@@ -17,7 +17,7 @@ public class LeafChecker : MonoBehaviour
     private float _greenLeavesHundredPercent;
     private float _yellowLeavesHundredPercent;
 
-    private void OnEnable()
+    public void ResetChecker()
     {
         StartCoroutine(WaitTreeCrownFiller());
     }

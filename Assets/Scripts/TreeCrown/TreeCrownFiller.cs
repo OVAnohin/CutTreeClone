@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TreeCrownFiller : MonoBehaviour
 {
-    [SerializeField] private Tilemap[] _levelMap;
+    [SerializeField] private Tilemap[] _levelMaps;
+    [SerializeField] private Tilemap _level;
     [SerializeField] private TreeLeaf _greenLeaf;
     [SerializeField] private TreeLeaf _yellowLeaf;
     [SerializeField] private Transform _treeCrown;
@@ -14,22 +16,32 @@ public class TreeCrownFiller : MonoBehaviour
     public List<TreeLeaf> YellowLeaves { get; private set; }
 
     private System.Random _random = new System.Random();
-    private Tilemap _level;
 
     private void Awake()
     {
-        _level = _levelMap[0];
         GreenLeaves = new List<TreeLeaf>();
         YellowLeaves = new List<TreeLeaf>();
-        FillCrownOfTree();
     }
 
     public void ReFillCrown()
     {
-        _level = _levelMap[0].MemberwiseClone() as Tilemap;
-        //MyDerivedClass clone = original.MemberwiseClone() as MyDerivedClass;
-        //CultureInfo[] arrCIClone = (CultureInfo[])arrCI.Clone();
+        CloneLevelToCurrentLevel();
         FillCrownOfTree();
+    }
+
+    private void CloneLevelToCurrentLevel()
+    {
+        _level.ClearAllTiles();
+        for (int y = _levelMaps[0].cellBounds.y; y <= _levelMaps[0].cellBounds.size.y; y++)
+        {
+            for (int x = _levelMaps[0].cellBounds.x; x <= _levelMaps[0].cellBounds.size.x; x++)
+            {
+                TileBase tile = _levelMaps[0].GetTile(new Vector3Int(x, y, 0));
+
+                if (tile != null)
+                    _level.SetTile(new Vector3Int(x, y, 0), tile);
+            }
+        }
     }
 
     private void FillCrownOfTree()
