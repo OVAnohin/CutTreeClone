@@ -11,12 +11,13 @@ public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, I
 
     private Color _untouchColor;
     private Vector3 _targetPosition;
+    private Vector3 _startPosition;
     private float _localRotationZ;
 
     private void Start()
     {
         _untouchColor = _spriteRendererScissors[0].color;
-        _targetPosition = transform.position;
+        _targetPosition = _startPosition = transform.position;
         _localRotationZ = transform.rotation.z;
     }
 
@@ -24,6 +25,11 @@ public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, I
     {
         if (_targetPosition != transform.position)
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, Time.deltaTime * _speed);
+    }
+
+    public void MoveToStartPosition()
+    {
+        transform.position = _targetPosition = _startPosition;
     }
 
     public void OnDrag(PointerEventData eventData)

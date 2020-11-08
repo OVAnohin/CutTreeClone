@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(TreeCrownFiller))]
 public class LeafChecker : MonoBehaviour
 {
     [SerializeField] private int _percentageOfLosses;
     [SerializeField] private int _percentageOfWinnig;
+
+    public event UnityAction GameLevelLost;
+    public event UnityAction GameLevelWin;
 
     private List<TreeLeaf> _greenLeaves;
     private List<TreeLeaf> _yellowLeaves;
@@ -34,10 +38,10 @@ public class LeafChecker : MonoBehaviour
         leaf.Clipped -= OnLeafClipped;
 
         if (CheckClippedStatus(_greenLeaves, _greenLeavesHundredPercent, _percentageOfLosses))
-            Debug.Log("Loose");
+            GameLevelLost?.Invoke();
 
         if (CheckClippedStatus(_yellowLeaves, _yellowLeavesHundredPercent, _percentageOfWinnig))
-            Debug.Log("Win");
+            GameLevelWin?.Invoke();
     }
 
     private bool CheckClippedStatus(List<TreeLeaf> leaves, float hundredPercent, int percent)

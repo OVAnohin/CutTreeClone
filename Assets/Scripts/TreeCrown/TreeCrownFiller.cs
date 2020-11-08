@@ -24,6 +24,14 @@ public class TreeCrownFiller : MonoBehaviour
         FillCrownOfTree();
     }
 
+    public void ReFillCrown()
+    {
+        _level = _levelMap[0].MemberwiseClone() as Tilemap;
+        //MyDerivedClass clone = original.MemberwiseClone() as MyDerivedClass;
+        //CultureInfo[] arrCIClone = (CultureInfo[])arrCI.Clone();
+        FillCrownOfTree();
+    }
+
     private void FillCrownOfTree()
     {
         for (int y = _level.cellBounds.y; y <= _level.cellBounds.size.y; y++)
