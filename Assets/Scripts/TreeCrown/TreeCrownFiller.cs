@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TreeCrownFiller : MonoBehaviour
 {
+    [SerializeField] private GameObject _grid;
     [SerializeField] private Tilemap[] _levelMaps;
     [SerializeField] private Tilemap _level;
     [SerializeField] private TreeLeaf _greenLeaf;
@@ -14,8 +16,10 @@ public class TreeCrownFiller : MonoBehaviour
 
     public List<TreeLeaf> GreenLeaves { get; private set; }
     public List<TreeLeaf> YellowLeaves { get; private set; }
+    public bool IsInitComplete { get; private set; }
 
     private System.Random _random = new System.Random();
+    private int _numberLevel = 0;
 
     private void Awake()
     {
@@ -25,18 +29,46 @@ public class TreeCrownFiller : MonoBehaviour
 
     public void ReFillCrown()
     {
+        IsInitComplete = false;
+
+        ResetLists();
+
+        GreenLeaves = new List<TreeLeaf>();
+        YellowLeaves = new List<TreeLeaf>();
+
+        _grid.SetActive(true);
         CloneLevelToCurrentLevel();
         FillCrownOfTree();
+        _grid.SetActive(false);
+
+        IsInitComplete = true;
+    }
+
+    public void NextLevel()
+    {
+        if (_numberLevel < _levelMaps.Length - 1)
+            _numberLevel++;
+        else
+            _numberLevel = 0;
+    }
+
+    private void ResetLists()
+    {
+        foreach (TreeLeaf item in GreenLeaves)
+            Destroy(item.gameObject);
+
+        foreach (TreeLeaf item in YellowLeaves)
+            Destroy(item.gameObject);
     }
 
     private void CloneLevelToCurrentLevel()
     {
         _level.ClearAllTiles();
-        for (int y = _levelMaps[0].cellBounds.y; y <= _levelMaps[0].cellBounds.size.y; y++)
+        for (int y = _levelMaps[_numberLevel].cellBounds.y; y <= _levelMaps[_numberLevel].cellBounds.size.y; y++)
         {
-            for (int x = _levelMaps[0].cellBounds.x; x <= _levelMaps[0].cellBounds.size.x; x++)
+            for (int x = _levelMaps[_numberLevel].cellBounds.x; x <= _levelMaps[_numberLevel].cellBounds.size.x; x++)
             {
-                TileBase tile = _levelMaps[0].GetTile(new Vector3Int(x, y, 0));
+                TileBase tile = _levelMaps[_numberLevel].GetTile(new Vector3Int(x, y, 0));
 
                 if (tile != null)
                     _level.SetTile(new Vector3Int(x, y, 0), tile);
@@ -93,6 +125,6 @@ public class TreeCrownFiller : MonoBehaviour
             case "YellowLeaf":
                 YellowLeaves.Add(spawned);
                 break;
-        }    
+        }
     }
 }

@@ -6,23 +6,27 @@ public class Game : MonoBehaviour
 {
     [SerializeField] private GameObject _start;
     [SerializeField] private GameObject _gameOver;
+    [SerializeField] private GameObject _nextLevel;
     [SerializeField] private TreeCrownFiller _treeCrownFiller;
     [SerializeField] private Scissors _scissors;
     [SerializeField] private LeafChecker _leafChecker;
 
     private StartScreen _startScreen;
     private GameOverScreen _gameOverScreen;
+    private NextLevelScreen _nextLevelScreen;
 
     private void Awake()
     {
         _startScreen = _start.GetComponent<StartScreen>();
         _gameOverScreen = _gameOver.GetComponent<GameOverScreen>();
+        _nextLevelScreen = _nextLevel.GetComponent<NextLevelScreen>();
     }
 
     private void OnEnable()
     {
         _startScreen.PlayButtonClick += OnPlayButtonClick;
         _gameOverScreen.RestartButtonClick += OnRestartButtonClick;
+        _nextLevelScreen.NextLevelButtonClick += OnNextLevelButtonClick;
         _leafChecker.GameLevelLost += OnGameOver;
         _leafChecker.GameLevelWin += OnGameWin;
     }
@@ -31,6 +35,7 @@ public class Game : MonoBehaviour
     {
         _startScreen.PlayButtonClick -= OnPlayButtonClick;
         _gameOverScreen.RestartButtonClick -= OnRestartButtonClick;
+        _nextLevelScreen.NextLevelButtonClick -= OnNextLevelButtonClick;
         _leafChecker.GameLevelLost -= OnGameOver;
         _leafChecker.GameLevelWin -= OnGameWin;
     }
@@ -54,6 +59,13 @@ public class Game : MonoBehaviour
         StartGame();
     }
 
+    private void OnNextLevelButtonClick()
+    {
+        _treeCrownFiller.NextLevel();
+        _nextLevel.SetActive(false);
+        StartGame();
+    }
+
     private void StartGame()
     {
         Time.timeScale = 1;
@@ -71,6 +83,6 @@ public class Game : MonoBehaviour
     public void OnGameWin()
     {
         Time.timeScale = 0;
-        _gameOver.SetActive(true);
+        _nextLevel.SetActive(true);
     }
 }

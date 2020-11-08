@@ -38,10 +38,16 @@ public class LeafChecker : MonoBehaviour
         leaf.Clipped -= OnLeafClipped;
 
         if (CheckClippedStatus(_greenLeaves, _greenLeavesHundredPercent, _percentageOfLosses))
+        {
+            Debug.Log("Lost");
             GameLevelLost?.Invoke();
+        }
 
         if (CheckClippedStatus(_yellowLeaves, _yellowLeavesHundredPercent, _percentageOfWinnig))
+        {
+            Debug.Log("Win");
             GameLevelWin?.Invoke();
+        }
     }
 
     private bool CheckClippedStatus(List<TreeLeaf> leaves, float hundredPercent, int percent)
@@ -55,12 +61,14 @@ public class LeafChecker : MonoBehaviour
 
     private IEnumerator WaitTreeCrownFiller()
     {
-        while (_greenLeaves == null && _yellowLeaves == null)
+        bool isInitComplete = GetComponent<TreeCrownFiller>().IsInitComplete;
+        while (isInitComplete == false)
         {
-            _greenLeaves = GetComponent<TreeCrownFiller>().GreenLeaves;
-            _yellowLeaves = GetComponent<TreeCrownFiller>().YellowLeaves;
             yield return new WaitForSeconds(1);
         }
+
+        _greenLeaves = GetComponent<TreeCrownFiller>().GreenLeaves;
+        _yellowLeaves = GetComponent<TreeCrownFiller>().YellowLeaves;
 
         InitLeaf(_greenLeaves, out _greenLeavesHundredPercent);
         InitLeaf(_yellowLeaves, out _yellowLeavesHundredPercent);
