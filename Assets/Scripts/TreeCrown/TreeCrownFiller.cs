@@ -13,6 +13,7 @@ public class TreeCrownFiller : MonoBehaviour
     [SerializeField] private TreeLeaf _greenLeaf;
     [SerializeField] private TreeLeaf _yellowLeaf;
     [SerializeField] private Transform _treeCrown;
+    [SerializeField] private int _capacity;
 
     public List<TreeLeaf> GreenLeaves { get; private set; }
     public List<TreeLeaf> YellowLeaves { get; private set; }
@@ -25,16 +26,15 @@ public class TreeCrownFiller : MonoBehaviour
     {
         GreenLeaves = new List<TreeLeaf>();
         YellowLeaves = new List<TreeLeaf>();
+
+        Initialize(GreenLeaves, _greenLeaf);
+        Initialize(YellowLeaves, _yellowLeaf);
     }
 
     public void ReFillCrown()
     {
         IsInitComplete = false;
-
-        ResetLists();
-
-        GreenLeaves = new List<TreeLeaf>();
-        YellowLeaves = new List<TreeLeaf>();
+        DropLeaves();
 
         _grid.SetActive(true);
         CloneLevelToCurrentLevel();
@@ -42,6 +42,12 @@ public class TreeCrownFiller : MonoBehaviour
         _grid.SetActive(false);
 
         IsInitComplete = true;
+    }
+
+    public void DropLeaves()
+    {
+        ResetLists(YellowLeaves);
+        ResetLists(GreenLeaves);
     }
 
     public void NextLevel()
@@ -52,15 +58,34 @@ public class TreeCrownFiller : MonoBehaviour
             _numberLevel = 0;
     }
 
-    private void ResetLists()
+    public void DropYellowLeaves()
     {
-        foreach (TreeLeaf item in GreenLeaves)
-            Destroy(item.gameObject);
-
-        foreach (TreeLeaf item in YellowLeaves)
-            Destroy(item.gameObject);
+        ResetLists(YellowLeaves);
     }
 
+    private void Initialize(List<TreeLeaf> treeLeaves, TreeLeaf prefab)
+    {
+        for (int i = 0; i < _capacity; i++)
+        {
+            TreeLeaf spawned = Instantiate(prefab, _treeCrown.transform);
+            spawned.gameObject.SetActive(false);
+
+            treeLeaves.Add(spawned);
+        }
+    }
+
+    private void ResetLists(List<TreeLeaf> treeLeaves)
+    {
+        foreach (TreeLeaf item in treeLeaves)
+            item.gameObject.SetActive(false);
+    }
+
+    protected bool TryGetLeaf(List<TreeLeaf> treeLeaves, out TreeLeaf result)
+    {
+        result = treeLeaves.FirstOrDefault(p => p.gameObject.activeSelf == false);
+
+        return result != null;
+    }
     private void CloneLevelToCurrentLevel()
     {
         _level.ClearAllTiles();
@@ -88,11 +113,11 @@ public class TreeCrownFiller : MonoBehaviour
                 {
                     switch (tile.name)
                     {
-                        case "GreenCircle":
-                            GenerateLeaves(y, x, _greenLeaf);
+                        case "GreenCircle":                        
+                            GenerateLeaves(y, x, GreenLeaves);
                             break;
                         case "YellowCircle":
-                            GenerateLeaves(y, x, _yellowLeaf);
+                            GenerateLeaves(y, x, YellowLeaves);
                             break;
                     }
 
@@ -102,29 +127,19 @@ public class TreeCrownFiller : MonoBehaviour
         }
     }
 
-    private void GenerateLeaves(int y, int x, TreeLeaf leaf)
+    private void GenerateLeaves(int y, int x, List<TreeLeaf> treeLeaves)
     {
         for (int i = 0; i < 4; i++)
         {
-            float step = (float)_random.Next(-1, 1) / 10f;
-            Vector3 vector3 = _level.GetBoundsLocal(new Vector3Int(x, y, 0)).center + new Vector3(step, step, 0);
-            TreeLeaf spawned = Instantiate(leaf, vector3, Quaternion.Euler(0, 0, _random.Next(0, 360)), _treeCrown);
-
-            AddLeafToList(leaf, spawned);
-        }
-    }
-
-    private void AddLeafToList(TreeLeaf leaf, TreeLeaf spawned)
-    {
-        string leafType = leaf.GetType().ToString();
-        switch (leafType)
-        {
-            case "GreenLeaf":
-                GreenLeaves.Add(spawned);
-                break;
-            case "YellowLeaf":
-                YellowLeaves.Add(spawned);
-                break;
+            TreeLeaf leaf;
+            if (TryGetLeaf(treeLeaves, out leaf))
+            {
+                float step = (float)_random.Next(-1, 1) / 10f;
+                Vector3 spawnPoint = _level.GetBoundsLocal(new Vector3Int(x, y, 0)).center + new Vector3(step, step, 0);
+                leaf.gameObject.SetActive(true);
+                leaf.gameObject.transform.position = spawnPoint;
+                leaf.gameObject.transform.rotation = Quaternion.Euler(0, 0, _random.Next(0, 360));
+            }
         }
     }
 }

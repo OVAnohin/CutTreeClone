@@ -22,7 +22,7 @@ public class Scissors : MonoBehaviour
         _scissorsMover.MoveToStartPosition();
     }
 
-    public void TryCutAnimationPlay()
+    public void TryPlay()
     {
         if (_isAnimationPlaying == false)
             StartCoroutine(ActivateCutPlayAnimation());

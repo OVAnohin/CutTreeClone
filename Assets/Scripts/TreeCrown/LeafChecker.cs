@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,35 +25,25 @@ public class LeafChecker : MonoBehaviour
 
     private void OnLeafClipped(TreeLeaf leaf)
     {
-        string leafType = leaf.GetType().ToString();
-        switch (leafType)
-        {
-            case "GreenLeaf":
-                _greenLeaves.Remove(leaf);
-                break;
-            case "YellowLeaf":
-                _yellowLeaves.Remove(leaf);
-                break;
-        }
-
         leaf.Clipped -= OnLeafClipped;
 
         if (CheckClippedStatus(_greenLeaves, _greenLeavesHundredPercent, _percentageOfLosses))
         {
-            Debug.Log("Lost");
+            UnSetEvent();
             GameLevelLost?.Invoke();
         }
-
-        if (CheckClippedStatus(_yellowLeaves, _yellowLeavesHundredPercent, _percentageOfWinnig))
+        else if (CheckClippedStatus(_yellowLeaves, _yellowLeavesHundredPercent, _percentageOfWinnig))
         {
-            Debug.Log("Win");
+            UnSetEvent();
             GameLevelWin?.Invoke();
         }
     }
 
-    private bool CheckClippedStatus(List<TreeLeaf> leaves, float hundredPercent, int percent)
+    private bool CheckClippedStatus(List<TreeLeaf> treeLeaves, float hundredPercent, int percent)
     {
-        float currentPercent = (leaves.Count * 100) / hundredPercent;
+        int count = treeLeaves.Count(s => s.gameObject.activeSelf == true);
+        float currentPercent = (count * 100) / hundredPercent;
+
         if (100 - currentPercent >= percent)
             return true;
 
@@ -79,6 +70,15 @@ public class LeafChecker : MonoBehaviour
         foreach (TreeLeaf leaf in treeLeaves)
             leaf.Clipped += OnLeafClipped;
 
-        hundredPercent = treeLeaves.Count;
+        hundredPercent = treeLeaves.Count(s => s.gameObject.activeSelf == true);
+    }
+
+    private void UnSetEvent()
+    {
+        foreach (TreeLeaf leaf in _greenLeaves)
+            leaf.Clipped -= OnLeafClipped;
+
+        foreach (TreeLeaf leaf in _yellowLeaves)
+            leaf.Clipped -= OnLeafClipped;
     }
 }

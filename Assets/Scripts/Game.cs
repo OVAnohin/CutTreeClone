@@ -68,21 +68,23 @@ public class Game : MonoBehaviour
 
     private void StartGame()
     {
-        Time.timeScale = 1;
         _treeCrownFiller.ReFillCrown();
         _leafChecker.ResetChecker();
         _scissors.ResetScissors();
+        Time.timeScale = 1;
     }
 
     public void OnGameOver()
     {
         Time.timeScale = 0;
+        _treeCrownFiller.DropLeaves();
         _gameOver.SetActive(true);
     }
 
     public void OnGameWin()
     {
         Time.timeScale = 0;
+        _treeCrownFiller.DropYellowLeaves();
         _nextLevel.SetActive(true);
     }
 }

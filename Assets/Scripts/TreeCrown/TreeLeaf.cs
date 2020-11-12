@@ -12,7 +12,7 @@ public abstract class TreeLeaf : MonoBehaviour
         if (collision.GetComponent<Scissors>())
         {
             Clipped?.Invoke(this);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

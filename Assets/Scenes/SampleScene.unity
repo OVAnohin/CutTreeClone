@@ -20292,6 +20292,7 @@ MonoBehaviour:
   _yellowLeaf: {fileID: 864183163317019539, guid: 037c9a9d1469f7c429e187a049031991,
     type: 3}
   _treeCrown: {fileID: 1405186326}
+  _capacity: 2000
 --- !u!114 &1405186328
 MonoBehaviour:
   m_ObjectHideFlags: 0
