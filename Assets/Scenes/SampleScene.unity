@@ -20287,12 +20287,13 @@ MonoBehaviour:
   - {fileID: 675828098}
   - {fileID: 49207439}
   _level: {fileID: 396073134}
-  _greenLeaf: {fileID: 309054338234584643, guid: 140f6d1634249694fa18ed30fa2c0158,
+  _greenLeaf: {fileID: 6279202850237638853, guid: 140f6d1634249694fa18ed30fa2c0158,
     type: 3}
-  _yellowLeaf: {fileID: 864183163317019539, guid: 037c9a9d1469f7c429e187a049031991,
+  _yellowLeaf: {fileID: 5464544370275556511, guid: 037c9a9d1469f7c429e187a049031991,
     type: 3}
+  _coin: {fileID: 3007726848837157339, guid: 08781cf2a0346b14491eb1913351742d, type: 3}
   _treeCrown: {fileID: 1405186326}
-  _capacity: 2000
+  _leavesCapacity: 2000
 --- !u!114 &1405186328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20666,7 +20667,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1652209976}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.31, z: 0}
+  m_LocalPosition: {x: 0, y: -0.63, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 259181135}
@@ -22693,8 +22694,8 @@ Tilemap:
   - first: {x: 6, y: 7, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -23278,8 +23279,8 @@ Tilemap:
   - first: {x: -8, y: 11, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -24188,13 +24189,17 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 143
     m_Data: {fileID: 11400000, guid: 5aa63df11547c5d4eadac12451aaf457, type: 2}
-  - m_RefCount: 241
+  - m_RefCount: 239
     m_Data: {fileID: 11400000, guid: 67a4ebe47f14f1448afa913ab7b2981c, type: 2}
+  - m_RefCount: 2
+    m_Data: {fileID: 11400000, guid: d83e982de0944c74a94744c16731858d, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 143
     m_Data: {fileID: 21300000, guid: 36c2e20fd998d364b981ae60498c4cba, type: 3}
-  - m_RefCount: 241
+  - m_RefCount: 239
     m_Data: {fileID: 21300000, guid: 1ef6d411216e81e4ba02bab453cf3a4e, type: 3}
+  - m_RefCount: 2
+    m_Data: {fileID: 21300000, guid: fdb974fcc4799a9448a85a001d117886, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 384
     m_Data:
@@ -24535,10 +24540,10 @@ RectTransform:
   m_Father: {fileID: 388074734}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.81551856, y: 0.884146}
-  m_AnchorMax: {x: 0.93900007, y: 0.9385625}
+  m_AnchorMin: {x: 0.81700003, y: 0.8244792}
+  m_AnchorMax: {x: 0.93700004, y: 0.88000005}
   m_AnchoredPosition: {x: -0.4000244, y: 0.5}
-  m_SizeDelta: {x: -1.824585, y: -1.829834}
+  m_SizeDelta: {x: 0.17541504, y: -2.829834}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2008776811
 MonoBehaviour:

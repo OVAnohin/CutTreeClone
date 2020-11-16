@@ -13,8 +13,8 @@ public class LeafChecker : MonoBehaviour
     public event UnityAction GameLevelLost;
     public event UnityAction GameLevelWin;
 
-    private List<TreeLeaf> _greenLeaves;
-    private List<TreeLeaf> _yellowLeaves;
+    private List<GameObject> _greenLeaves;
+    private List<GameObject> _yellowLeaves;
     private float _greenLeavesHundredPercent;
     private float _yellowLeavesHundredPercent;
 
@@ -39,9 +39,9 @@ public class LeafChecker : MonoBehaviour
         }
     }
 
-    private bool CheckClippedStatus(List<TreeLeaf> treeLeaves, float hundredPercent, int percent)
+    private bool CheckClippedStatus(List<GameObject> treeLeaves, float hundredPercent, int percent)
     {
-        int count = treeLeaves.Count(s => s.gameObject.activeSelf == true);
+        int count = treeLeaves.Count(s => s.activeSelf == true);
         float currentPercent = (count * 100) / hundredPercent;
 
         if (100 - currentPercent >= percent)
@@ -65,20 +65,20 @@ public class LeafChecker : MonoBehaviour
         InitLeaf(_yellowLeaves, out _yellowLeavesHundredPercent);
     }
 
-    private void InitLeaf(List<TreeLeaf> treeLeaves, out float hundredPercent)
+    private void InitLeaf(List<GameObject> treeLeaves, out float hundredPercent)
     {
-        foreach (TreeLeaf leaf in treeLeaves)
-            leaf.Clipped += OnLeafClipped;
+        foreach (GameObject leaf in treeLeaves)
+            leaf.GetComponent<TreeLeaf>().Clipped += OnLeafClipped;
 
-        hundredPercent = treeLeaves.Count(s => s.gameObject.activeSelf == true);
+        hundredPercent = treeLeaves.Count(s => s.activeSelf == true);
     }
 
     private void UnSetEvent()
     {
-        foreach (TreeLeaf leaf in _greenLeaves)
-            leaf.Clipped -= OnLeafClipped;
+        foreach (GameObject leaf in _greenLeaves)
+            leaf.GetComponent<TreeLeaf>().Clipped -= OnLeafClipped;
 
-        foreach (TreeLeaf leaf in _yellowLeaves)
-            leaf.Clipped -= OnLeafClipped;
+        foreach (GameObject leaf in _yellowLeaves)
+            leaf.GetComponent<TreeLeaf>().Clipped -= OnLeafClipped;
     }
 }

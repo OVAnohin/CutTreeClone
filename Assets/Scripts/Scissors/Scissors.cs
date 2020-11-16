@@ -2,17 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(ScissorsMover))]
 public class Scissors : MonoBehaviour
 {
+    public int Coin { get; private set; }
+    public event UnityAction<int> CoinChanged;
+
     private Animator _animator;
     private bool _isAnimationPlaying = false;
     private ScissorsMover _scissorsMover;
 
     private void Start()
     {
+        Coin = 0;
         _animator = GetComponent<Animator>();
         _scissorsMover = GetComponent<ScissorsMover>();
     }
@@ -22,10 +27,16 @@ public class Scissors : MonoBehaviour
         _scissorsMover.MoveToStartPosition();
     }
 
-    public void TryPlay()
+    public void TryPlayAnimation()
     {
         if (_isAnimationPlaying == false)
             StartCoroutine(ActivateCutPlayAnimation());
+    }
+
+    public void AddCoin() 
+    {
+        Coin++;
+        CoinChanged?.Invoke(Coin);
     }
 
     private IEnumerator ActivateCutPlayAnimation()
