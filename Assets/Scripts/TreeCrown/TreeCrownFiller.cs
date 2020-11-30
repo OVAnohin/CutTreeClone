@@ -52,6 +52,7 @@ public class TreeCrownFiller : MonoBehaviour
     {
         ResetLists(YellowLeaves);
         ResetLists(GreenLeaves);
+        ResetLists(_coins);
     }
 
     public void NextLevel()

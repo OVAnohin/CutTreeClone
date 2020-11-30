@@ -8,21 +8,26 @@ public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, I
     [SerializeField] private float _speed;
     [SerializeField] private SpriteRenderer[] _spriteRendererScissors;
     [SerializeField] private Color _touchColor;
+    [SerializeField] private Color _untouchColor;
 
-    private Color _untouchColor;
     private Vector3 _targetPosition;
     private Vector3 _startPosition;
-    private float _localRotationZ;
 
     private void Start()
     {
-        _untouchColor = _spriteRendererScissors[0].color;
         _targetPosition = _startPosition = transform.position;
-        _localRotationZ = transform.rotation.z;
     }
 
     private void Update()
     {
+        if (Input.touchCount > 0)
+        {
+            for (var i = 0; i < Input.touchCount; ++i)
+                if (Input.GetTouch(i).phase == TouchPhase.Began)
+                    if (Input.GetTouch(i).tapCount == 2)
+                        Flip();
+        }
+
         if (_targetPosition != transform.position)
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, Time.deltaTime * _speed);
     }
@@ -57,7 +62,7 @@ public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, I
 
     public void Flip()
     {
-        transform.localRotation = new Quaternion(transform.localRotation.x, transform.localRotation.y, _localRotationZ * -1, 1);
-        _localRotationZ *= -1;
+        float angle = transform.localRotation.eulerAngles.z * -1;
+        transform.localRotation = Quaternion.Euler(0, 0, angle);
     }
 }

@@ -9,8 +9,9 @@ public class Coin : MonoBehaviour
     {
         if (collision.GetComponent<Scissors>() != null)
         {
-            collision.GetComponent<Scissors>().AddCoin();
             gameObject.SetActive(false);
+            collision.GetComponent<Scissors>().AddCoin();
+            Debug.Log(collision.ToString());
         }
     }
 }
