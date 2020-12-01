@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Scissors>() != null)
+        if (collision.TryGetComponent<Scissors>(out Scissors scissors))
         {
             gameObject.SetActive(false);
-            collision.GetComponent<Scissors>().AddCoin();
-            Debug.Log(collision.ToString());
+            scissors.AddCoin();
         }
     }
 }

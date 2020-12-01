@@ -14,7 +14,6 @@ public class TreeCrownFiller : MonoBehaviour
     [SerializeField] private GameObject _yellowLeaf;
     [SerializeField] private GameObject _coin;
     [SerializeField] private Transform _treeCrown;
-    [SerializeField] private int _leavesCapacity;
 
     public List<GameObject> GreenLeaves { get; private set; }
     public List<GameObject> YellowLeaves { get; private set; }
@@ -22,7 +21,8 @@ public class TreeCrownFiller : MonoBehaviour
 
     private System.Random _random = new System.Random();
     private int _numberLevel = 0;
-    private int _coinsCapacity = 5;
+    private int _leavesCapacity = 1500;
+    private int _coinsCapacity = 3;
     private List<GameObject> _coins = new List<GameObject>();
 
     private void Awake()
