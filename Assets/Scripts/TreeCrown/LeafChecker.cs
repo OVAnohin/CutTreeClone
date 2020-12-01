@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class LeafChecker : MonoBehaviour
     private List<GameObject> _yellowLeaves;
     private float _greenLeavesHundredPercent;
     private float _yellowLeavesHundredPercent;
+    private bool _isShowWarning;
 
     public void ResetChecker()
     {
@@ -26,6 +28,9 @@ public class LeafChecker : MonoBehaviour
     private void OnLeafClipped(TreeLeaf leaf)
     {
         leaf.Clipped -= OnLeafClipped;
+
+        if (leaf.GetType().ToString() == "GreenLeaf" && _isShowWarning == false)
+            StartCoroutine(ShowGreenZoneWarning(_greenLeaves));
 
         if (CheckClippedStatus(_greenLeaves, _greenLeavesHundredPercent, _percentageOfLosses))
         {
@@ -63,6 +68,25 @@ public class LeafChecker : MonoBehaviour
 
         InitLeaf(_greenLeaves, out _greenLeavesHundredPercent);
         InitLeaf(_yellowLeaves, out _yellowLeavesHundredPercent);
+    }
+
+    private IEnumerator ShowGreenZoneWarning(List<GameObject> treeLeaves)
+    {
+        _isShowWarning = true;
+        Color color = treeLeaves[0].GetComponent<SpriteRenderer>().color;
+
+        SetColorToLeaves(treeLeaves, Color.red);
+
+        yield return new WaitForSeconds(.2f);
+
+        SetColorToLeaves(treeLeaves, color);
+        _isShowWarning = false;
+    }
+
+    private void SetColorToLeaves(List<GameObject> treeLeaves, Color color)
+    {
+        foreach (GameObject leaf in treeLeaves)
+            leaf.GetComponent<SpriteRenderer>().color = color;
     }
 
     private void InitLeaf(List<GameObject> treeLeaves, out float hundredPercent)
