@@ -18,6 +18,7 @@ public class TreeCrownFiller : MonoBehaviour
     public List<GameObject> GreenLeaves { get; private set; }
     public List<GameObject> YellowLeaves { get; private set; }
     public bool IsInitComplete { get; private set; }
+    public string CurrentLevel => _levelMaps[_numberLevel].name;
 
     private System.Random _random = new System.Random();
     private int _numberLevel = 0;

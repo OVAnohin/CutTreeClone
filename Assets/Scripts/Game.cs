@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     [SerializeField] private TreeCrownFiller _treeCrownFiller;
     [SerializeField] private Scissors _scissors;
     [SerializeField] private LeafChecker _leafChecker;
-    [SerializeField] private TMP_Text _coin;
+    [SerializeField] private TMP_Text _score;
 
     private StartScreen _startScreen;
     private GameOverScreen _gameOverScreen;
@@ -48,12 +48,13 @@ public class Game : MonoBehaviour
     {
         Time.timeScale = 0;
         _treeCrownFiller.ReFillCrown();
+        _startScreen.SetLevel(_treeCrownFiller.CurrentLevel);
         _start.SetActive(true);
     }
 
     private void OnPlayButtonClick()
     {
-        _coin.text = _scissors.Coin.ToString();
+        _score.text = _scissors.Coin.ToString();
         _start.SetActive(false);
         StartGame();
     }
@@ -83,6 +84,7 @@ public class Game : MonoBehaviour
     {
         Time.timeScale = 0;
         _treeCrownFiller.DropLeaves();
+        _gameOverScreen.SetLevel(_treeCrownFiller.CurrentLevel);
         _gameOver.SetActive(true);
     }
 
@@ -90,11 +92,12 @@ public class Game : MonoBehaviour
     {
         Time.timeScale = 0;
         _treeCrownFiller.DropYellowLeaves();
+        _nextLevelScreen.SetLevel(_treeCrownFiller.CurrentLevel + " Complete.");
         _nextLevel.SetActive(true);
     }
 
     private void OnCoinChanged(int coin)
     {
-        _coin.text = coin.ToString();
+        _score.text = coin.ToString();
     }
 }
