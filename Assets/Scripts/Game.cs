@@ -14,13 +14,13 @@ public class Game : MonoBehaviour
     [SerializeField] private TMP_Text _score;
 
     private StartScreen _startScreen;
-    private GameOverScreen _gameOverScreen;
+    private GameLostScreen _gameOverScreen;
     private NextLevelScreen _nextLevelScreen;
 
     private void Awake()
     {
         _startScreen = _start.GetComponent<StartScreen>();
-        _gameOverScreen = _gameLost.GetComponent<GameOverScreen>();
+        _gameOverScreen = _gameLost.GetComponent<GameLostScreen>();
         _nextLevelScreen = _nextLevel.GetComponent<NextLevelScreen>();
     }
 
@@ -46,7 +46,6 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 0;
         _treeCrownFiller.ReFillCrown();
         _startScreen.SetLevel(_treeCrownFiller.CurrentLevel);
         _start.SetActive(true);
@@ -77,12 +76,10 @@ public class Game : MonoBehaviour
         _treeCrownFiller.ReFillCrown();
         _leafChecker.ResetChecker();
         _scissors.ResetScissors();
-        Time.timeScale = 1;
     }
 
     public void OnGameOver()
     {
-        Time.timeScale = 0;
         _treeCrownFiller.DropLeaves();
         _gameOverScreen.SetLevel(_treeCrownFiller.CurrentLevel);
         _gameLost.SetActive(true);
@@ -90,7 +87,6 @@ public class Game : MonoBehaviour
 
     public void OnGameWin()
     {
-        Time.timeScale = 0;
         _treeCrownFiller.DropYellowLeaves();
         _nextLevelScreen.SetLevel(_treeCrownFiller.CurrentLevel + " Done");
         _nextLevel.SetActive(true);

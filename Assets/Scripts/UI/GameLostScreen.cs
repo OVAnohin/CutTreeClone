@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameOverScreen : Screen
+public class GameLostScreen : Screen
 {
     public event UnityAction RestartButtonClick;
 

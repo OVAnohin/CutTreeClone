@@ -32,7 +32,7 @@ public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, I
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, Time.deltaTime * _speed);
     }
 
-    public void MoveToStartPosition()
+    public void ResetPosition()
     {
         transform.position = _targetPosition = _startPosition;
     }
@@ -60,7 +60,7 @@ public class ScissorsMover : MonoBehaviour, IDragHandler, IPointerDownHandler, I
             item.color = color;
     }
 
-    public void Flip()
+    private void Flip()
     {
         float angle = transform.localRotation.eulerAngles.z * -1;
         transform.localRotation = Quaternion.Euler(0, 0, angle);

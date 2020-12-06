@@ -25,7 +25,7 @@ public class Scissors : MonoBehaviour
     public void ResetScissors()
     {
         _animator.Play("Idle");
-        _scissorsMover.MoveToStartPosition();
+        _scissorsMover.ResetPosition();
     }
 
     public void TryPlayAnimation()
