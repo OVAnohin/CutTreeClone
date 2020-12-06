@@ -6,7 +6,7 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     [SerializeField] private GameObject _start;
-    [SerializeField] private GameObject _gameOver;
+    [SerializeField] private GameObject _gameLost;
     [SerializeField] private GameObject _nextLevel;
     [SerializeField] private TreeCrownFiller _treeCrownFiller;
     [SerializeField] private Scissors _scissors;
@@ -20,7 +20,7 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         _startScreen = _start.GetComponent<StartScreen>();
-        _gameOverScreen = _gameOver.GetComponent<GameOverScreen>();
+        _gameOverScreen = _gameLost.GetComponent<GameOverScreen>();
         _nextLevelScreen = _nextLevel.GetComponent<NextLevelScreen>();
     }
 
@@ -61,7 +61,7 @@ public class Game : MonoBehaviour
 
     private void OnRestartButtonClick()
     {
-        _gameOver.SetActive(false);
+        _gameLost.SetActive(false);
         StartGame();
     }
 
@@ -85,14 +85,14 @@ public class Game : MonoBehaviour
         Time.timeScale = 0;
         _treeCrownFiller.DropLeaves();
         _gameOverScreen.SetLevel(_treeCrownFiller.CurrentLevel);
-        _gameOver.SetActive(true);
+        _gameLost.SetActive(true);
     }
 
     public void OnGameWin()
     {
         Time.timeScale = 0;
         _treeCrownFiller.DropYellowLeaves();
-        _nextLevelScreen.SetLevel(_treeCrownFiller.CurrentLevel + " Complete.");
+        _nextLevelScreen.SetLevel(_treeCrownFiller.CurrentLevel + " Done");
         _nextLevel.SetActive(true);
     }
 
