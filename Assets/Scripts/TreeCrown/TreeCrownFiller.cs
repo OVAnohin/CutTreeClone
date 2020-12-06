@@ -25,11 +25,13 @@ public class TreeCrownFiller : MonoBehaviour
     private int _leavesCapacity = 1500;
     private int _coinsCapacity = 3;
     private List<GameObject> _coins = new List<GameObject>();
+    private Vector3 _startPosition;
 
     private void Awake()
     {
         GreenLeaves = new List<GameObject>();
         YellowLeaves = new List<GameObject>();
+        _startPosition = _treeCrown.localPosition;
 
         Initialize(GreenLeaves, _greenLeaf, _leavesCapacity);
         Initialize(YellowLeaves, _yellowLeaf, _leavesCapacity);
@@ -39,12 +41,13 @@ public class TreeCrownFiller : MonoBehaviour
     public void ReFillCrown()
     {
         IsInitComplete = false;
-        DropLeaves();
+        _treeCrown.localPosition = _startPosition;
 
-        _grid.SetActive(true);
+        DropLeaves();
         CloneLevelToCurrentLevel();
         FillCrownOfTree();
-        _grid.SetActive(false);
+
+        _treeCrown.localPosition = _levelMaps[_numberLevel].transform.position;
 
         IsInitComplete = true;
     }
@@ -94,6 +97,7 @@ public class TreeCrownFiller : MonoBehaviour
     private void CloneLevelToCurrentLevel()
     {
         _level.ClearAllTiles();
+
         for (int y = _levelMaps[_numberLevel].cellBounds.y; y <= _levelMaps[_numberLevel].cellBounds.size.y; y++)
         {
             for (int x = _levelMaps[_numberLevel].cellBounds.x; x <= _levelMaps[_numberLevel].cellBounds.size.x; x++)
