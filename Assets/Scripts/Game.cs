@@ -13,16 +13,20 @@ public class Game : MonoBehaviour
     [SerializeField] private LeafChecker _leafChecker;
     [SerializeField] private TMP_Text _score;
     [SerializeField] private GameObject _progressBarPanel;
+    [SerializeField] private GameObject _winLelelEffectPrefab;
 
     private StartScreen _startScreen;
     private GameLostScreen _gameOverScreen;
     private NextLevelScreen _nextLevelScreen;
+    private GameObject _winLelelEffect;
 
     private void Awake()
     {
         _startScreen = _start.GetComponent<StartScreen>();
         _gameOverScreen = _gameLost.GetComponent<GameLostScreen>();
         _nextLevelScreen = _nextLevel.GetComponent<NextLevelScreen>();
+        _winLelelEffect = Instantiate(_winLelelEffectPrefab);
+        _winLelelEffect.SetActive(false);
     }
 
     private void OnEnable()
@@ -69,6 +73,7 @@ public class Game : MonoBehaviour
     {
         _treeCrownFiller.NextLevel();
         _nextLevel.SetActive(false);
+        _winLelelEffect.SetActive(false);
         StartGame();
     }
 
@@ -93,6 +98,7 @@ public class Game : MonoBehaviour
         _nextLevelScreen.SetLevel(_treeCrownFiller.CurrentLevel + " Done");
         _treeCrownFiller.DropYellowLeaves();
         _progressBarPanel.SetActive(false);
+        _winLelelEffect.SetActive(true);
         _nextLevel.SetActive(true);
     }
 

@@ -22324,6 +22324,8 @@ MonoBehaviour:
   _leafChecker: {fileID: 1405186328}
   _score: {fileID: 1300750202}
   _progressBarPanel: {fileID: 66306259}
+  _winLelelEffectPrefab: {fileID: 1323789314303246, guid: 0aae61241024e3e4694133580082ad18,
+    type: 3}
 --- !u!114 &1405186330
 MonoBehaviour:
   m_ObjectHideFlags: 0
