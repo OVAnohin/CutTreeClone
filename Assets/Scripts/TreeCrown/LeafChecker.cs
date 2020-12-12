@@ -13,6 +13,7 @@ public class LeafChecker : MonoBehaviour
 
     public event UnityAction GameLevelLost;
     public event UnityAction GameLevelWin;
+    public event UnityAction<int, float> YellowLeavesCutted;
 
     private List<GameObject> _greenLeaves;
     private List<GameObject> _yellowLeaves;
@@ -23,6 +24,7 @@ public class LeafChecker : MonoBehaviour
     public void ResetChecker()
     {
         StartCoroutine(WaitTreeCrownFiller());
+        CountYellowLeavesCutted();
     }
 
     private void OnLeafClipped(TreeLeaf leaf)
@@ -31,6 +33,9 @@ public class LeafChecker : MonoBehaviour
 
         if (leaf.GetType().ToString() == "GreenLeaf" && _isShowWarning == false)
             StartCoroutine(ShowGreenZoneWarning(_greenLeaves));
+
+        if (leaf.GetType().ToString() == "YellowLeaf")
+            CountYellowLeavesCutted();
 
         if (CheckClippedStatus(_greenLeaves, _greenLeavesHundredPercent, _percentageOfLosses))
         {
@@ -44,9 +49,16 @@ public class LeafChecker : MonoBehaviour
         }
     }
 
+    private void CountYellowLeavesCutted()
+    {
+        float maxValue = (_yellowLeavesHundredPercent * _percentageOfWinnig) / 100;
+        int value = Convert.ToInt32(_yellowLeavesHundredPercent) - NumberLeavesOnTree(_yellowLeaves);
+        YellowLeavesCutted?.Invoke(value, maxValue);
+    }
+
     private bool CheckClippedStatus(List<GameObject> treeLeaves, float hundredPercent, int percent)
     {
-        int count = treeLeaves.Count(s => s.activeSelf == true);
+        int count = NumberLeavesOnTree(treeLeaves);
         float currentPercent = (count * 100) / hundredPercent;
 
         if (100 - currentPercent >= percent)
@@ -104,5 +116,10 @@ public class LeafChecker : MonoBehaviour
 
         foreach (GameObject leaf in _yellowLeaves)
             leaf.GetComponent<TreeLeaf>().Clipped -= OnLeafClipped;
+    }
+
+    private int NumberLeavesOnTree(List<GameObject> treeLeaves)
+    {
+        return treeLeaves.Count(s => s.activeSelf == true);
     }
 }

@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
     [SerializeField] private Scissors _scissors;
     [SerializeField] private LeafChecker _leafChecker;
     [SerializeField] private TMP_Text _score;
+    [SerializeField] private GameObject _progressBarPanel;
 
     private StartScreen _startScreen;
     private GameLostScreen _gameOverScreen;
@@ -29,7 +30,7 @@ public class Game : MonoBehaviour
         _startScreen.PlayButtonClick += OnPlayButtonClick;
         _gameOverScreen.RestartButtonClick += OnRestartButtonClick;
         _nextLevelScreen.NextLevelButtonClick += OnNextLevelButtonClick;
-        _leafChecker.GameLevelLost += OnGameOver;
+        _leafChecker.GameLevelLost += OnGameLost;
         _leafChecker.GameLevelWin += OnGameWin;
         _scissors.CoinChanged += OnCoinChanged;
     }
@@ -39,7 +40,7 @@ public class Game : MonoBehaviour
         _startScreen.PlayButtonClick -= OnPlayButtonClick;
         _gameOverScreen.RestartButtonClick -= OnRestartButtonClick;
         _nextLevelScreen.NextLevelButtonClick -= OnNextLevelButtonClick;
-        _leafChecker.GameLevelLost -= OnGameOver;
+        _leafChecker.GameLevelLost -= OnGameLost;
         _leafChecker.GameLevelWin -= OnGameWin;
         _scissors.CoinChanged -= OnCoinChanged;
     }
@@ -76,19 +77,22 @@ public class Game : MonoBehaviour
         _treeCrownFiller.ReFillCrown();
         _leafChecker.ResetChecker();
         _scissors.ResetScissors();
+        _progressBarPanel.SetActive(true);
     }
 
-    public void OnGameOver()
+    public void OnGameLost()
     {
-        _treeCrownFiller.DropLeaves();
         _gameOverScreen.SetLevel(_treeCrownFiller.CurrentLevel);
+        _treeCrownFiller.DropLeaves();
+        _progressBarPanel.SetActive(false);
         _gameLost.SetActive(true);
     }
 
     public void OnGameWin()
     {
-        _treeCrownFiller.DropYellowLeaves();
         _nextLevelScreen.SetLevel(_treeCrownFiller.CurrentLevel + " Done");
+        _treeCrownFiller.DropYellowLeaves();
+        _progressBarPanel.SetActive(false);
         _nextLevel.SetActive(true);
     }
 
